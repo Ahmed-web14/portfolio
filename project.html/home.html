@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="./book.sql">
+   <link rel="stylesheet" href="./save.php">
+  </head>
+  <style>
+   .navbar {
+      /* background-color: #68A; */
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .navbar a {
+      color: #68A;
+      text-decoration: none;
+      padding: 10px 10px;
+      display: inline-block;
+    }
+
+    
+
+   
+
+    .cart-icon {
+      position: relative;
+    }
+
+    .cart-icon::after {
+      content: '🛒';
+      font-size: 20px;
+      margin-left: 5px;
+    }
+
+  
+   
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .logo span {
+      font-size: 22px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: black;
+      font-size: 19px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: lightblue;
+    }
+
+    .cart-icon {
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+/* footer{
+  /* background-image: url(data:image/jpeg;base64,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); */
+  background-color: #384959;
+  height: 200px;
+} */
+
+/* body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    } */
+
+   
+
+ 
+
+  
+
+  
+    
+
+ 
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+.class-container a :hover{
+    color: blue;
+}
+.card a :hover{
+    color: blue;
+}
+.product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 26px;
+      max-width: 100%;
+      margin: 0 auto;
+      background-color: #88BDF2;
+      padding: 5%;
+      
+    } 
+
+     .product-card {
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px); */
+    }
+
+     .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    } 
+
+     .product-details {
+      padding: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    } 
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 16px;
+    }
+
+     .add-to-cart {
+      padding: 10px;
+      width: ;
+      border: none;
+      border-radius: 6px;
+      background-color: black;
+      color: white;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    } 
+
+     .add-to-cart:hover {
+      background-color: #68A;
+    }
+/* .product-button{
+   background-color: #007bff;
+  color: white;
+  font-size: 18px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}  */ */
+    .fashion{
+      display: flex;
+      gap: 100px;
+      justify-content: center;
+      padding: 20px;
+      background-color: #222;
+    
+    }
+   .product-men{
+    color: white;
+   }
+    
+  </style>
+  <style>
+     .mens-perfumes {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+.section-title {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+.perfume-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 80px;
+  padding: 20px;
+}
+.perfume-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.perfume-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.perfume-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.perfume-card h1 {
+  margin: 15px 0 8px;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  color: #88BDF2;
+}
+.perfume-card p {
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #555;
+}
+.btn {
+  background-color: green;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s;
+}
+.btn:hover {
+  background-color: #333;
+}
+  header {
+            background-color: #1c1c1c;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+
+.footer {
+      background-color: #111;
+      color: #eee;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer .brand-name {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .footer .description {
+      max-width: 500px;
+      margin: 0 auto 20px;
+      font-size: 15px;
+      color: #ccc;
+    }
+
+    .footer .social-icons {
+      margin-top: 20px;
+    }
+
+    .footer .social-icons a {
+      display: inline-block;
+      margin: 0 10px;
+      color: #eee;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+      color: #ff6a00;
+    }
+
+    .footer .copyright {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #666;
+    }
+
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000; /* Ensures it stays on top */
+    }
+
+    .whatsapp-float img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .whatsapp-float img:hover {
+      transform: scale(1.1);
+    
+
+      
+
+
+
+  </style>
+
+<style>
+  
+/* Search input box */
+#searchInput {
+  padding: 8px 12px;
+  width: 250px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+/* Buttons styling */
+button {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007BFF; /* Bootstrap Blue */
+  border: none;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Back button different color */
+#backButton {
+  background-color: #6c757d; /* Gray */
+}
+
+#backButton:hover {
+  background-color: #565e64;
+}
+
+/* Perfume cards styling */
+.perfume-card {
+  background-color: white;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  font-size: 18px;
+  color: #333;
+}
+
+/* No results message */
+#noResults {
+  margin-top: 15px;
+  font-weight: bold;
+}
+  </style>
+
+  <body>
+     <nav class="navbar">
+    <div class="logo">
+      <!-- <img src="./image/image.png" alt="Brand Logo" /> -->
+      <span>PERFUMORA</span>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-links" id="navLinks">
+      <a href="./home.html">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./new arrivlas.html">New Arrivals</a>
+      <!-- <a href="#">Cart
+      <i class="fas fa-shopping-cart cart-icon"></i></a> -->
+    </div>
+  </nav>
+
+  <script>
+    function toggleMenu() {
+      const links = document.getElementById('navLinks');
+      links.classList.toggle('show');
+    }
+    
+  </script>
+     
+
+<!-- <div class="nav">
+<p><h1> <i> "Fragrance that defines you — only at Urban Shop"  </i></h1></p>
+<br>
+<p><h1> <i>"Leave a lasting impression with every spray"</i> </i></h1></p>
+<br>
+<p><h1> <i>"Luxury in every drop. Discover your signature scent"</i></h1></p>
+<br>
+<p><h1><i>"Not just a perfume, it’s your personality"</i></h1></p>
+</div> -->
+
+
+<header>
+    <h1>Home</h1>
+    <p>Perfumora – Where Fragrance Meets Elegance</p>
+</header>
+ <br>
+
+ <input type="text" id="searchInput" placeholder="Search perfumes...">
+<button onclick="searchPerfumes()">Search</button>
+<button id="backButton" onclick="resetSearch()" style="display: none;">Back</button>
+<p id="noResults" style="display: none; color: red;">No products found.</p>
+<br>
+  <br>
+ 
+<div class="perfume-grid">
+    <!-- Row of 4 cards -->
+    <div class="perfume-card">
+      <img src="./image/image copy 4.png" alt="Perfume Name 1">
+        <b><p>Christian Dior Sauvage Men Edp 100Ml</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 13.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><div class="perfume-card">
+      <img src="./image/image copy 11.png" alt="Perfume Name 1">
+      <b><p>Versace Eros By Versace For Men Eau De Toilette 100ml</p></b>
+ <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 14.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div></div>
+    <div class="perfume-card">
+      <img src="./image/image copy 12.png" alt="Perfume Name 1">
+      <b><p>Tom Ford BEAU DE JOUR EAU DE PARFUM 100ML</p></b>
+     <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 15.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card">
+      <img src="./image/image copy 13.png" alt="Perfume Name 1">
+      <b><p>Issey Miyake Nuit d’Issey Pulse Of The Night 100ML</p></b>
+ <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 16.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 14.png" alt="Perfume Name 1">
+      <b><p>MONTBLANC Legend Eau De Toilette 100 ML</p></b>
+   <h1><b>₨:4,950.00</b></h1>
+   <a href="./add to cart 17.html"> <button class="add-to-cart">Add to Cart</button></a> 
+    </div>
+   
+
+    <div class="perfume-card"><img src="./image/image copy 15.png" alt="Perfume Name 1">
+      <b><p>Mont Blanc Emblem EDT 100ML</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+     
+      <a href="./add to cart 18.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <!-- Next row 4 cards -->
+    <div class="perfume-card"><img src="./image/image copy 16.png" alt="Perfume Name 1">
+      <b><p>TIZIANA TERENZI KIRKE EXTRAIT DE PARFUM 100ML</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 19.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 18.png" alt="Perfume Name 1">
+     <b><p>Ralph Lauren – Polo Sport – Eau De Toilette 125Ml</p></b>
+     <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 20.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 19.png" alt="Perfume Name 1">
+      <b><p>Hugo Boss Boss Bottled Oud Saffron EDP 100ml</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 21.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 20.png" alt="Perfume Name 1">
+     <b><p>Calvin Klein CK Euphoria Perfume for Men Eau De Toilette 100 ml</p></b>
+   <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 22.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+ <div class="perfume-card"><img src="./image/image copy 46.png" alt="Perfume Name 1">
+     <b><p>Invictus Victory Paco Rabanne For Men 100ml</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 23.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+
+     <div class="perfume-card"><img src="./image/image copy 47.png" alt="Perfume Name 1">
+     <b><p>Invictus by Paco Rabanne for Men 100 ML Eau de Toilette</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 24.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+
+    <!-- Row of 4 cards -->
+    <div class="perfume-card">
+      <img src="./image/image copy 5.png" alt="Perfume Name 1">
+      <b><p>Carolina Herrera Chic Women Edp 80ml</p></b>
+  <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 1.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+      <div class="perfume-card">
+      <img src="./image/image copy 6.png" alt="Perfume Name 1">
+      <b><p>Givenchy Dahlia Noir for Women Eau de 75ml</p></b>
+     <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 2.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card">
+      <img src="./image/image copy 33.png" alt="Perfume Name 1">
+      <b><p>Issey Miyake L EAU Dissey Rose & Rose EDP Intense 90ml</p></b>
+ <h1><b>₨:4,950.00</b></h1>
+       <a href="./add to cart 3.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card">
+      <img src="./image/image copy 34.png" alt="Perfume Name 1">
+      <b><p>L’INTERDIT By Givenchy EAU DE PARFUM</p></b>
+ <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 4.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 35.png" alt="Perfume Name 1">
+      <b><p>Dolce Gabbana L’IMPERATRICE Eau de Toilette</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 5.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 36.png" alt="Perfume Name 1">
+      <b><p>Black Phantom By Kilian UNISEX 100 ML</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 6.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <!-- Next row 4 cards -->
+    <div class="perfume-card"><img src="./image/image copy 16.png" alt="Perfume Name 1">
+      <b><p>TIZIANA TERENZI KIRKE EXTRAIT DE PARFUM 100ML</p></b>
+    <h1><b>₨:4,950.00</b></h1>
+      <a href="./add to cart 7.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+    <div class="perfume-card"><img src="./image/image copy 37.png" alt="Perfume Name 1">
+     <b><p>Chloé Eau de Parfum 75 ML</p></b>
+   <h1><b>₨:4,950.00</b></h1>
+     <a href="./add to cart 8.html"> <button class="add-to-cart">Add to Cart</button></a>
+    </div>
+
+   
+  </div>
+</section>
+
+</div>
+
+
+<script>
+  function searchPerfumes() {
+    var input = document.getElementById("searchInput").value.toLowerCase();
+    var cards = document.getElementsByClassName("perfume-card");
+    var matchFound = false;
+
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var text = card.innerText.toLowerCase();
+
+      if (text.includes(input)) {
+        card.style.display = "block";
+        matchFound = true;
+      } else {
+        card.style.display = "none";
+      }
+    }
+
+    // ✅ Always show back button after search
+    document.getElementById("backButton").style.display = "inline-block";
+
+    // ✅ Show or hide "no results" message
+    document.getElementById("noResults").style.display = matchFound ? "none" : "block";
+  }
+
+  function resetSearch() {
+    var cards = document.getElementsByClassName("perfume-card");
+
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].style.display = "block";
+    }
+
+    document.getElementById("searchInput").value = "";
+    document.getElementById("backButton").style.display = "none";
+    document.getElementById("noResults").style.display = "none";
+  }
+</script>
+
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+  <footer class="footer">
+    <div class="brand-name">PERFUMORA</div>
+    <div class="description">
+      Perfumora is a luxury perfume brand that gives your personality a new identity.
+       Each bottle tells a story — fresh, bold, and unforgettable.
+    </div>
+<!-- Facebook -->
+  <a href="https://www.facebook.com/YourPage" target="_blank">
+    <img src="./image/image copy 9.png" alt="Facebook" width="40" style="margin: 0 10px;">
+  </a>
+
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/urbanshop_store?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+    <img src="./image/image copy 8.png" alt="Instagram" width="40" style="margin: 0 10px;">
+  </a>
+
+  <!-- TikTok -->
+ <a href="https://www.tiktok.com/@urbannshop?is_from_webapp=1&sender_device=pc" target="_blank">
+    <img src="./image/image copy 10.png" alt="Instagram" width="40" style="margin: 0 10px;">
+  </a>
+  
+  <div class="whatsapp-float">
+    <a href="https://wa.me/918123456789" target="_blank" title="Chat with us on WhatsApp">
+      <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat">
+    </a>
+  </div>
+
+  <a href="https://wa.me/918123456789?text=Hello%20I%20am%20interested%20in%20your%20services" target="_blank">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" style="height: 40px; width: 40px;">
+</a>
+
+    <div class="copyright">
+      &copy; 2025 Perfumora. All rights reserved.
+    </div>
+  </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+   
+  </body>
+</html>

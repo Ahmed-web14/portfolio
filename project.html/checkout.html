@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Floating WhatsApp Button</title>
+  <style>
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .whatsapp-float img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-float img:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ WhatsApp Floating Button -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/918123456789" target="_blank" title="Chat with us on WhatsApp">
+      <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat">
+    </a>
+  </div>
+
+  <!-- 📄 Dummy page content to test scrolling -->
+  <div style="height: 2000px;">
+    <h1>Scroll Down to See WhatsApp Button Stay Fixed</h1>
+    <p>WhatsApp button will always be at the bottom right corner.</p>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+<a href="https://wa.me/918123456789?text=Hello%20I%20am%20interested%20in%20your%20services" target="_blank">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" style="height: 40px; width: 40px;">
+</a>
